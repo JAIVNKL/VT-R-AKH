@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>שאלון הכרות</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: blue;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button-group {
+            text-align: center;
+        }
+        .button-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .button-group button:hover {
+            background-color: #0056b3;
+        }
+        .thank-you {
+            display: none;
+            text-align: center;
+            font-size: 24px;
+            color: green;
+            margin-top: 20px;
+        }
+        .instructions {
+            margin-top: 15px;
+            font-size: 14px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>שאלון הכרות</h1>
+        <form id="survey-form" onsubmit="sendEmail(event)">
+            <div class="input-group">
+                <label for="name">שם:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="input-group">
+                <label for="age">גיל:</label>
+                <input type="number" id="age" required>
+            </div>
+            <div class="input-group">
+                <label for="email">אימייל:</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="input-group">
+                <label for="hobbies">מהם התחביבים שלך?</label>
+                <textarea id="hobbies" rows="3"></textarea>
+            </div>
+            <div class="instructions">
+                בכרטיסייה שנפתחת, יש ללחוץ על שליחה
+            </div>
+            <div class="button-group">
+                <button type="submit">שלח</button>
+            </div>
+        </form>
+        <div class="thank-you" id="thank-you">
+            תודה!
+            <div class="button-group">
+                <button type="button" onclick="closeTab()">יציאה</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sendEmail(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const email = document.getElementById('email').value;
+            const hobbies = document.getElementById('hobbies').value;
+
+            const subject = encodeURIComponent('שאלון הכרות');
+            const body = encodeURIComponent(`שם: ${name}\nגיל: ${age}\nאימייל: ${email}\nתחביבים: ${hobbies}`);
+            const mailtoLink = `https://mail.google.com/mail/?view=cm&fs=1&to=ht1234567890abc@gmail.com&su=${subject}&body=${body}`;
+            
+            const a = document.createElement('a');
+            a.href = mailtoLink;
+            a.target = '_blank';
+            a.click();
+
+            document.getElementById('survey-form').style.display = 'none';
+            document.getElementById('thank-you').style.display = 'block';
+        }
+
+        function closeTab() {
+            window.close();
+        }
+    </script>
+</body>
+</html>
